@@ -153,13 +153,11 @@ export default function Navbar() {
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Resume Button in Navbar */}
             <a
-              href={PERSONAL_INFO.resumePdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              download="Manikant_Kumar_Resume.pdf"
-              className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-cyan-400/50 hover:text-cyan-300 hover:shadow-[0_0_15px_rgba(0,240,255,0.2)] transition-all"
+              href={PERSONAL_INFO.resumeDownloadUrl}
+              download="Manikant_Kumar.pdf"
+              className="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-300 bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 hover:border-blue-400/50 hover:text-blue-300 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)] transition-all cursor-pointer"
             >
-              <Download className="w-3.5 h-3.5 text-cyan-400" />
+              <Download className="w-3.5 h-3.5 text-blue-400" />
               <span>Resume</span>
             </a>
 
@@ -249,13 +247,11 @@ export default function Navbar() {
               className="flex flex-col gap-3 pt-6 border-t border-white/10 relative z-10"
             >
               <a
-                href={PERSONAL_INFO.resumePdfUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                download="Manikant_Kumar_Resume.pdf"
-                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold text-slate-200 bg-white/[0.05] border border-cyan-400/20 hover:border-cyan-400/50 shadow-md"
+                href={PERSONAL_INFO.resumeDownloadUrl}
+                download="Manikant_Kumar.pdf"
+                className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-sm font-semibold text-slate-200 bg-white/[0.05] border border-blue-400/20 hover:border-blue-400/50 shadow-md active:scale-95 transition-all"
               >
-                <Download className="w-4 h-4 text-cyan-300" />
+                <Download className="w-4 h-4 text-sky-300" />
                 <span>Download Resume (PDF)</span>
               </a>
 

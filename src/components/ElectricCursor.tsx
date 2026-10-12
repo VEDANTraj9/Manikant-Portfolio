@@ -76,10 +76,10 @@ export default function ElectricCursor() {
         <div
           className={`rounded-full transition-all duration-150 ${
             isClicking
-              ? "w-8 h-8 bg-white shadow-[0_0_20px_#00F0FF,0_0_40px_#8B5CF6]"
+              ? "w-8 h-8 bg-white shadow-[0_0_18px_#38bdf8,0_0_30px_#6366f1]"
               : isPointer
-              ? "w-5 h-5 bg-cyan-300 shadow-[0_0_15px_#00F0FF]"
-              : "w-2.5 h-2.5 bg-cyan-400 shadow-[0_0_10px_#00F0FF]"
+              ? "w-5 h-5 bg-sky-300 shadow-[0_0_12px_#38bdf8]"
+              : "w-2.5 h-2.5 bg-blue-400 shadow-[0_0_10px_#3b82f6]"
           }`}
         />
       </motion.div>
@@ -95,14 +95,14 @@ export default function ElectricCursor() {
         }}
       >
         <div
-          className={`rounded-full border border-cyan-400/30 transition-all duration-300 flex items-center justify-center ${
+          className={`rounded-full border border-blue-400/25 transition-all duration-300 flex items-center justify-center ${
             isPointer
-              ? "w-14 h-14 bg-cyan-500/10 border-cyan-400/70 shadow-[0_0_25px_rgba(0,240,255,0.4)] scale-110"
-              : "w-9 h-9 bg-purple-500/5 shadow-[0_0_15px_rgba(139,92,246,0.2)]"
+              ? "w-14 h-14 bg-blue-500/10 border-blue-400/50 shadow-[0_0_20px_rgba(59,130,246,0.3)] scale-110"
+              : "w-9 h-9 bg-indigo-500/5 shadow-[0_0_12px_rgba(99,102,241,0.15)]"
           }`}
         >
           {/* Subtle Electric Plasma Ring Glow */}
-          <div className="w-full h-full rounded-full bg-gradient-to-tr from-cyan-400/20 via-transparent to-purple-500/20 animate-spin-slow" />
+          <div className="w-full h-full rounded-full bg-gradient-to-tr from-blue-400/15 via-transparent to-indigo-500/15 animate-spin-slow" />
         </div>
       </motion.div>
     </>

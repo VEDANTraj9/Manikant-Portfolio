@@ -56,13 +56,13 @@ export default function ElectricCanvas() {
       isHovered: false,
     };
 
-    // Color Palettes (Electric Cyan, Thunder Violet, Neon Blue, Pure White)
+    // Color Palettes (Sapphire Blue, Indigo, Sky Blue, Soft Lavender, Subtle White)
     const electricColors = [
-      "rgba(0, 240, 255, ", // Electric Cyan
-      "rgba(139, 92, 246, ", // Thunder Violet
-      "rgba(59, 130, 246, ", // Neon Blue
-      "rgba(192, 132, 252, ", // Purple Flare
-      "rgba(255, 255, 255, ", // Lightning White
+      "rgba(59, 130, 246, ", // Sapphire Blue
+      "rgba(99, 102, 241, ", // Indigo
+      "rgba(56, 189, 248, ", // Sky Blue
+      "rgba(129, 140, 248, ", // Soft Lavender
+      "rgba(255, 255, 255, ", // Subtle White
     ];
 
     // High DPI Canvas Scaling

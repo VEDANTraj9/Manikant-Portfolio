@@ -2,12 +2,13 @@ import { Project, SkillCategory, ExperienceItem, StatItem, SocialLink } from "..
 
 export const PERSONAL_INFO = {
   name: "Manikant Kumar",
-  title: "Full Stack Developer",
-  roleTagline: "React.js • Node.js • Java Spring Boot • Python FastAPI",
-  headline: "Building Scalable Full-Stack & Real-Time Web Systems",
+  title: "Full Stack Engineer",
+  company: "Appspine Technologies",
+  roleTagline: "Full Stack Engineer @ Appspine Technologies • React.js • Next.js 16 • Node.js • Java Spring Boot",
+  headline: "Full Stack Engineer Architecting Scalable & Real-Time Production Systems",
   subheadline:
-    "Full Stack Developer specializing in React.js, Node.js, Express.js, Java Spring Boot, Python FastAPI, MySQL, PostgreSQL, and Socket.IO real-time architectures with ACID transaction engines and 99.9% uptime.",
-  status: "Available for Full-Time Roles & High-Impact Contracts",
+    "Full Stack Engineer at Appspine Technologies specializing in React.js, Next.js 16, TypeScript, Node.js, Express.js, Java Spring Boot, Python FastAPI, PostgreSQL, and Socket.IO real-time web architectures with 99.9% uptime.",
+  status: "Full Stack Engineer @ Appspine Technologies | Open for Collaborations",
   location: "Noida, Uttar Pradesh, India",
   email: "rajmanikant100@gmail.com",
   phone: "+91-9905959438",
@@ -15,11 +16,35 @@ export const PERSONAL_INFO = {
   yearsExperience: "1+ Years",
   completedProjects: "10+",
   githubUrl: "https://github.com/VEDANTraj9",
-  linkedinUrl: "https://www.linkedin.com/in/manikant-kumar-900158211/",
-  portfolioUrl: "https://portfoliomanikant.netlify.app/",
-  resumePdfUrl: "/resume.pdf",
+  linkedinUrl: "https://www.linkedin.com/in/manikant-kumar",
+  portfolioUrl: "https://manikantportfolio-drab.vercel.app/",
+  resumePdfUrl: "/Manikant_Kumar.pdf",
+  resumeDownloadUrl: "/api/resume?download=1",
   profileImage: "/profile.png",
 };
+
+export const SEO_KEYWORDS = [
+  "Manikant Kumar",
+  "Full Stack Developer",
+  "Full Stack Engineer",
+  "Appspine Technologies",
+  "React.js Developer",
+  "Next.js 16 Developer",
+  "TypeScript Engineer",
+  "Node.js Backend Developer",
+  "Express.js REST APIs",
+  "Java Spring Boot",
+  "Python FastAPI",
+  "PostgreSQL",
+  "MySQL Database",
+  "Socket.IO Real-Time",
+  "Redis Cache",
+  "Razorpay Payment Gateway",
+  "Microservices Architecture",
+  "Full Stack Developer Noida",
+  "Software Engineer India",
+  "Scalable Web Applications",
+];
 
 export const STATS: StatItem[] = [
   {
@@ -42,7 +67,7 @@ export const STATS: StatItem[] = [
   },
   {
     label: "Engineering Academic CGPA",
-    value: "8.35",
+    value: "8.10",
     subtext: "B.Tech in Computer Science (KK University)",
     icon: "GraduationCap",
   },
@@ -69,7 +94,7 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
     description: "Modern component-driven web frameworks with responsive UI/UX.",
     skills: [
       { name: "React.js", level: 95, highlight: true },
-      { name: "Next.js (App Router)", level: 88, highlight: true },
+      { name: "Next.js (App Router)", level: 90, highlight: true },
       { name: "Svelte", level: 82 },
       { name: "Tailwind CSS", level: 94, highlight: true },
       { name: "Bootstrap 5", level: 90 },
@@ -107,6 +132,21 @@ export const SKILL_CATEGORIES: SkillCategory[] = [
 ];
 
 export const PROJECTS: Project[] = [
+  {
+    id: "leadyfy-os",
+    title: "Leadyfy OS – UGC Agency Operations Platform",
+    description:
+      "Full-stack agency operations platform built with Next.js App Router and TypeScript, implementing role-based access control (RBAC) and Kanban production workflows.",
+    longDescription:
+      "Engineered with Next.js App Router, TypeScript, PostgreSQL, and Prisma ORM. Built Kanban-based video production pipelines with client feedback tracking, structured task workflows, and responsive UI deployed on Vercel.",
+    techStack: ["Next.js", "TypeScript", "PostgreSQL", "Prisma ORM", "Tailwind CSS", "Vercel"],
+    githubUrl: "https://github.com/VEDANTraj9",
+    liveUrl: "https://github.com/VEDANTraj9",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
+    category: "Full Stack",
+    featured: true,
+    metrics: "Next.js App Router & RBAC Security",
+  },
   {
     id: "navambhaw-platform",
     title: "NAVAMBHAW - Real-Time Consultation Platform",
@@ -186,35 +226,58 @@ export const PROJECTS: Project[] = [
 
 export const EXPERIENCES: ExperienceItem[] = [
   {
-    id: "exp-mojija",
-    role: "Full Stack Developer",
-    company: "Mojija E-Commerce Private Limited",
-    period: "August 2025 – Present",
+    id: "exp-appspine",
+    role: "Full Stack Engineer",
+    company: "Appspine Technologies",
+    period: "September 2026 – Present",
     location: "Noida, Uttar Pradesh, India",
     type: "Work",
     description:
-      "Leading full-stack engineering and real-time system architectures for high-traffic live production platforms.",
+      "Engineering scalable web applications by building responsive frontend components, implementing robust backend services, and ensuring seamless data flow across enterprise platforms.",
     achievements: [
-      "Architected & deployed the NAVAMBHAW live production platform using React.js, Node.js, Express.js, MySQL, Python FastAPI, and Socket.IO with sub-150ms latency across 5,000+ active users.",
+      "Develop and maintain scalable web applications by building responsive frontend components and integrating backend services using modern web technologies.",
+      "Implement and integrate RESTful APIs, manage database operations, and troubleshoot application issues to ensure reliable data flow and functionality.",
+      "Collaborate on feature development, bug fixes, and code improvements to enhance application performance, maintainability, and user experience.",
+      "Contribute to end-to-end development by coordinating frontend and backend functionality, testing integrations, and supporting ongoing application improvements.",
+    ],
+    technologies: [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "RESTful APIs",
+      "PostgreSQL",
+      "MySQL",
+      "Git",
+    ],
+  },
+  {
+    id: "exp-mojija",
+    role: "Full Stack Engineer",
+    company: "Mojija E-Commerce",
+    period: "August 2025 – September 2026",
+    location: "Noida, Uttar Pradesh, India",
+    type: "Work",
+    description:
+      "Engineered full-stack systems and real-time architectures for high-traffic live production platforms including NAVAMBHAW and Digital Kharidi.",
+    achievements: [
+      "Developed production applications, including NAVAMBHAW and Digital Kharidi, using React.js, Node.js, Express.js, Python FastAPI, and MySQL.",
+      "Implemented REST API integrations, real-time features using Socket.IO, JWT authentication, Redis caching, and database-driven wallet billing workflows.",
       "Engineered real-time transactional wallet billing engine leveraging SQL transactions for per-minute deductions, maintaining 100% ACID consistency and zero billing leakage across 10,000+ live transactions.",
-      "Integrated Razorpay payment gateway, JWT user authorization, and Redis caching, cutting API response times by 45% and seamlessly handling 200+ concurrent astrologer queue requests.",
-      "Developed Digital Kharidi e-commerce platform with indexed search filters and cart persistence, boosting page load speeds by 35% with 99.9% API uptime.",
+      "Integrated Razorpay payment gateway, cutting API response times by 45% with Redis caching and handling 200+ concurrent astrologer queue requests.",
       "Contributed to Kaira Jewellery ERP & Billing Software using Svelte, C#, and ASP.NET Core, reducing manual invoice generation and billing processing time by 40%.",
-      "Standardized Postman API test suites, decreasing post-release bug incidents by 30%.",
     ],
     technologies: [
       "React.js",
       "Node.js",
       "Express.js",
-      "MySQL",
       "Python FastAPI",
+      "MySQL",
       "Socket.IO",
       "Redis",
       "Razorpay",
-      "Svelte",
-      "C#",
-      "ASP.NET Core",
-      "Postman",
+      "JWT",
     ],
   },
   {
@@ -225,9 +288,9 @@ export const EXPERIENCES: ExperienceItem[] = [
     location: "Noida, Uttar Pradesh, India",
     type: "Work",
     description:
-      "Completed rigorous software development training and built 5+ enterprise-grade applications using modern Java and Spring ecosystem.",
+      "Completed intensive hands-on software development training, building 5+ enterprise applications using Java, Spring Boot, Spring Data JPA, Hibernate, JavaScript, and MySQL.",
     achievements: [
-      "Built 5+ full-stack enterprise applications utilizing Java, Spring Boot, Spring Data JPA, Hibernate, JavaScript, and MySQL.",
+      "Completed intensive hands-on software development training, building 5+ enterprise applications using Java, Spring Boot, Spring Data JPA, Hibernate, JavaScript, and MySQL.",
       "Designed 3-tier MVC architecture with Controllers, Services, and Repositories with secure REST API endpoints and database persistence.",
       "Implemented comprehensive database schema normalization, indexing, and transactional integrity.",
     ],
@@ -250,9 +313,9 @@ export const EXPERIENCES: ExperienceItem[] = [
     location: "Nalanda, Bihar, India",
     type: "Education",
     description:
-      "Graduated with high academic distinction. Specialized in Full Stack Development, Data Structures & Algorithms, Database Management Systems, and Distributed Computing.",
+      "Bachelor of Technology in Computer Science and Engineering with CGPA: 8.10 / 10.0.",
     achievements: [
-      "Academic Performance: CGPA 8.35 / 10.0.",
+      "Academic Performance: CGPA 8.10 / 10.0.",
       "Core Coursework: Data Structures, Algorithms, Object-Oriented Programming (Java/C++), Operating Systems, DBMS (SQL), Computer Networks.",
       "Led multiple web engineering and hackathon development initiatives across university technical chapters.",
     ],
