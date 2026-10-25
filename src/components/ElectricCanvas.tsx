@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
+import { useTheme } from "@/context/ThemeContext";
 
 interface Particle {
   x: number;
@@ -35,6 +36,12 @@ interface Spark {
 
 export default function ElectricCanvas() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { currentTheme } = useTheme();
+  const themeRef = useRef(currentTheme);
+
+  useEffect(() => {
+    themeRef.current = currentTheme;
+  }, [currentTheme]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -56,15 +63,6 @@ export default function ElectricCanvas() {
       isHovered: false,
     };
 
-    // Color Palettes (Sapphire Blue, Indigo, Sky Blue, Soft Lavender, Subtle White)
-    const electricColors = [
-      "rgba(59, 130, 246, ", // Sapphire Blue
-      "rgba(99, 102, 241, ", // Indigo
-      "rgba(56, 189, 248, ", // Sky Blue
-      "rgba(129, 140, 248, ", // Soft Lavender
-      "rgba(255, 255, 255, ", // Subtle White
-    ];
-
     // High DPI Canvas Scaling
     const handleResize = () => {
       if (!canvas) return;
@@ -85,8 +83,11 @@ export default function ElectricCanvas() {
     const particleCount = Math.min(Math.floor((width * height) / 18000), 65);
     const particles: Particle[] = [];
 
+    const getColors = () => themeRef.current.canvasColors;
+
     for (let i = 0; i < particleCount; i++) {
-      const baseColor = electricColors[Math.floor(Math.random() * (electricColors.length - 1))];
+      const colors = getColors();
+      const baseColor = colors[Math.floor(Math.random() * (colors.length - 1))];
       const maxAlpha = 0.2 + Math.random() * 0.55;
       particles.push({
         x: Math.random() * width,
@@ -126,7 +127,6 @@ export default function ElectricCanvas() {
       const segments1 = createLightningSegments(x1, y1, midX, midY, displace / 1.8, depth - 1);
       const segments2 = createLightningSegments(midX, midY, x2, y2, displace / 1.8, depth - 1);
 
-      // Chance to branch out a small sub-arc
       let branches: { x1: number; y1: number; x2: number; y2: number }[] = [];
       if (depth === 2 && Math.random() < 0.45) {
         const branchEndX = midX + (Math.random() - 0.5) * displace * 2;
@@ -146,6 +146,7 @@ export default function ElectricCanvas() {
       const endY = targetY !== undefined ? targetY : startY + 120 + Math.random() * 240;
 
       const segments = createLightningSegments(startX, startY, endX, endY, 65, 4);
+      const colors = getColors();
 
       // Create spark burst at lightning termination point
       for (let i = 0; i < 8; i++) {
@@ -158,7 +159,7 @@ export default function ElectricCanvas() {
           vy: Math.sin(angle) * speed,
           life: 0,
           maxLife: 15 + Math.random() * 20,
-          color: electricColors[Math.floor(Math.random() * electricColors.length)],
+          color: colors[Math.floor(Math.random() * colors.length)],
           size: 1 + Math.random() * 2,
         });
       }
@@ -166,7 +167,7 @@ export default function ElectricCanvas() {
       lightningBolts.push({
         segments,
         alpha: 0.9,
-        color: Math.random() > 0.35 ? "#00F0FF" : "#A855F7",
+        color: Math.random() > 0.4 ? themeRef.current.primaryHex : themeRef.current.secondaryHex,
         width: 1.5 + Math.random() * 1.5,
         decay: 0.045 + Math.random() * 0.04,
       });
@@ -180,6 +181,7 @@ export default function ElectricCanvas() {
 
       // Small chance to crackle a spark when moving rapidly
       if (Math.random() < 0.12) {
+        const colors = getColors();
         sparks.push({
           x: e.clientX,
           y: e.clientY,
@@ -187,7 +189,7 @@ export default function ElectricCanvas() {
           vy: (Math.random() - 0.5) * 3,
           life: 0,
           maxLife: 18,
-          color: Math.random() > 0.5 ? "rgba(0, 240, 255, " : "rgba(168, 85, 247, ",
+          color: colors[Math.floor(Math.random() * colors.length)],
           size: 1 + Math.random() * 2,
         });
       }
@@ -202,6 +204,7 @@ export default function ElectricCanvas() {
     const onClick = (e: MouseEvent) => {
       // Direct high-voltage strike on user click!
       triggerAtmosphericLightning(e.clientX, e.clientY);
+      const colors = getColors();
       for (let i = 0; i < 15; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = 2 + Math.random() * 4;
@@ -212,7 +215,7 @@ export default function ElectricCanvas() {
           vy: Math.sin(angle) * speed,
           life: 0,
           maxLife: 25,
-          color: "rgba(0, 240, 255, ",
+          color: colors[0],
           size: 1.5 + Math.random() * 2.5,
         });
       }
@@ -222,7 +225,6 @@ export default function ElectricCanvas() {
     document.addEventListener("mouseleave", onMouseLeave, { passive: true });
     window.addEventListener("click", onClick, { passive: true });
 
-    // Lightning strike timer logic
     let lastLightningTime = performance.now();
     let nextLightningInterval = 2500 + Math.random() * 4000;
 
@@ -241,6 +243,8 @@ export default function ElectricCanvas() {
         nextLightningInterval = 3000 + Math.random() * 5000;
         triggerAtmosphericLightning();
       }
+
+      const colors = getColors();
 
       // 1. Draw and Update Particles (Plasma Ions)
       for (let i = 0; i < particles.length; i++) {
@@ -273,11 +277,14 @@ export default function ElectricCanvas() {
           p.pulseSpeed = -p.pulseSpeed;
         }
 
+        // Periodically refresh particle color to match current theme
+        const colorPrefix = colors[i % (colors.length - 1)];
+
         // Draw particle with glow
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `${p.color}${Math.max(0, p.alpha)})`;
-        ctx.shadowColor = p.color.includes("0, 240, 255") ? "#00F0FF" : "#A855F7";
+        ctx.fillStyle = `${colorPrefix}${Math.max(0, p.alpha)})`;
+        ctx.shadowColor = themeRef.current.primaryHex;
         ctx.shadowBlur = 8;
         ctx.fill();
 
@@ -293,7 +300,7 @@ export default function ElectricCanvas() {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(0, 240, 255, ${lineAlpha})`;
+            ctx.strokeStyle = `${colors[0]}${lineAlpha})`;
             ctx.lineWidth = 0.6;
             ctx.shadowBlur = 0;
             ctx.stroke();
@@ -301,7 +308,6 @@ export default function ElectricCanvas() {
         }
       }
 
-      // Reset shadow blur
       ctx.shadowBlur = 0;
 
       // 2. Draw and Decay Lightning Bolts
@@ -357,17 +363,16 @@ export default function ElectricCanvas() {
           continue;
         }
 
-        const sparkAlpha = (1 - spark.life / spark.maxLife);
+        const sparkAlpha = 1 - spark.life / spark.maxLife;
         ctx.beginPath();
         ctx.arc(spark.x, spark.y, spark.size, 0, Math.PI * 2);
         ctx.fillStyle = `${spark.color}${sparkAlpha})`;
-        ctx.shadowColor = "#00F0FF";
+        ctx.shadowColor = themeRef.current.secondaryHex;
         ctx.shadowBlur = 10;
         ctx.globalAlpha = sparkAlpha;
         ctx.fill();
       }
 
-      // Reset global alpha & shadows
       ctx.globalAlpha = 1.0;
       ctx.shadowBlur = 0;
 

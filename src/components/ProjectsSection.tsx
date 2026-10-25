@@ -17,18 +17,22 @@ import { cn } from "@/lib/utils";
 
 type CategoryFilter = "All" | "Full Stack" | "Frontend & UI" | "AI & Cloud";
 
-// 3D Tilt Project Card Component
+// High-Fidelity 3D Tilt Project Card Component with Specular Glare & Depth Layering
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLDivElement | null>(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
+  const glareX = useMotionValue(50);
+  const glareY = useMotionValue(50);
 
-  const mouseXSpring = useSpring(x, { stiffness: 300, damping: 25 });
-  const mouseYSpring = useSpring(y, { stiffness: 300, damping: 25 });
+  const mouseXSpring = useSpring(x, { stiffness: 320, damping: 24, mass: 0.6 });
+  const mouseYSpring = useSpring(y, { stiffness: 320, damping: 24, mass: 0.6 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  // 3D Rotations
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -44,9 +48,17 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
     x.set(xPct);
     y.set(yPct);
+
+    glareX.set((mouseX / width) * 100);
+    glareY.set((mouseY / height) * 100);
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
+    setIsHovered(false);
     x.set(0);
     y.set(0);
   };
@@ -65,14 +77,24 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         transformStyle: "preserve-3d",
       }}
       onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="perspective-1000 group relative glass-card rounded-2xl overflow-hidden flex flex-col justify-between border border-white/10 hover:border-cyan-400/50 hover:shadow-[0_15px_40px_rgba(0,240,255,0.15),0_0_25px_rgba(139,92,246,0.15)] transition-all duration-300"
+      className="perspective-1000 group relative glass-card rounded-2xl overflow-hidden flex flex-col justify-between border border-white/10 hover:border-white/30 transition-all duration-300"
     >
-      {/* Animated Electric Border Beam on Hover */}
-      <div className="absolute -inset-[1px] rounded-2xl bg-gradient-to-r from-blue-500 via-indigo-500 to-sky-400 opacity-0 group-hover:opacity-100 blur-[1px] transition-opacity duration-300 pointer-events-none -z-10" />
+      {/* Dynamic Specular Light Glare Layer (Realistic 3D Sheen) */}
+      <div
+        className="absolute inset-0 rounded-2xl pointer-events-none z-30 transition-opacity duration-300"
+        style={{
+          opacity: isHovered ? 0.35 : 0,
+          background: `radial-gradient(circle 280px at ${glareX.get()}% ${glareY.get()}%, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.1) 40%, transparent 80%)`,
+        }}
+      />
 
-      {/* Media Preview Block with Zoom & Electric Overlay */}
-      <div className="relative">
+      {/* Animated Electric Border Beam on Hover */}
+      <div className="absolute -inset-[1px] rounded-2xl border-beam-card opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -z-10" />
+
+      {/* Media Preview Block with Zoom & 3D Depth */}
+      <div className="relative" style={{ transform: "translateZ(15px)", transformStyle: "preserve-3d" }}>
         <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-950">
           <Image
             src={project.image}
@@ -85,32 +107,32 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {/* High-Voltage Dark Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-[#080c16] via-[#080c16]/50 to-transparent opacity-85 group-hover:opacity-65 transition-opacity" />
 
-          {/* Category Tag with Blue Glow */}
-          <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#080c16]/80 backdrop-blur-md border border-blue-400/25 text-blue-300 shadow-[0_0_10px_rgba(59,130,246,0.15)]">
-            <Layers className="w-3 h-3 text-blue-400" />
+          {/* Category Tag with Theme Glow */}
+          <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-[#080c16]/85 backdrop-blur-md border border-white/15 text-white shadow-md">
+            <Layers className="w-3 h-3 text-[var(--theme-primary)]" />
             <span>{project.category}</span>
           </div>
 
           {/* Electric Live Bolt Badge */}
-          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-mono font-bold bg-[#080c16]/80 backdrop-blur-md border border-indigo-500/40 text-indigo-300">
-            <Zap className="w-3 h-3 text-sky-300 fill-sky-300 animate-pulse" />
+          <div className="absolute top-3 right-3 flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-mono font-bold bg-[#080c16]/85 backdrop-blur-md border border-white/15 text-white shadow-sm">
+            <Zap className="w-3 h-3 text-amber-300 fill-amber-300 animate-pulse" />
             <span>PROD</span>
           </div>
 
           {/* Production Metric Tag */}
           {project.metrics && (
-            <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-[#080c16]/85 backdrop-blur-md border border-blue-400/20 text-emerald-300">
+            <div className="absolute bottom-3 left-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-[#080c16]/85 backdrop-blur-md border border-white/10 text-emerald-300">
               <TrendingUp className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
               <span className="truncate">{project.metrics}</span>
             </div>
           )}
         </div>
 
-        {/* Card Body Content */}
-        <div className="p-5 sm:p-6">
-          <h3 className="text-lg font-bold text-white group-hover:text-blue-300 transition-colors flex items-center justify-between gap-2">
+        {/* Card Body Content with 3D Pop-Out */}
+        <div className="p-5 sm:p-6" style={{ transform: "translateZ(25px)" }}>
+          <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[var(--theme-secondary)] transition-colors flex items-center justify-between gap-2">
             <span>{project.title}</span>
-            <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-blue-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+            <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover:text-[var(--theme-primary)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
           </h3>
 
           <p className="mt-2.5 text-xs sm:text-sm text-slate-300 leading-relaxed line-clamp-3">
@@ -122,7 +144,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
             {project.techStack.map((tech) => (
               <span
                 key={tech}
-                className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold bg-white/[0.04] border border-blue-400/15 text-slate-300 group-hover:border-blue-400/40 group-hover:text-blue-200 transition-colors"
+                className="px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-semibold bg-white/[0.04] border border-white/10 text-slate-300 group-hover:border-[var(--theme-primary)]/40 group-hover:text-white transition-colors"
               >
                 {tech}
               </span>
@@ -131,13 +153,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      {/* Footer Action Links with Slide-up hover shine */}
-      <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 border-t border-white/[0.08] flex items-center justify-between gap-3 mt-auto relative z-10 bg-[#080c16]/60">
+      {/* Footer Action Links with 3D Depth & Slide-up hover shine */}
+      <div
+        className="px-5 sm:px-6 pb-5 sm:pb-6 pt-3 border-t border-white/[0.08] flex items-center justify-between gap-3 mt-auto relative z-10 bg-[#080c16]/60"
+        style={{ transform: "translateZ(28px)" }}
+      >
         <a
           href={project.liveUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 hover:from-blue-500 hover:to-indigo-500 shadow-md shadow-blue-600/25 hover:shadow-[0_0_15px_rgba(59,130,246,0.35)] transition-all duration-200"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-bold text-white theme-btn transition-all duration-200 active:scale-95"
         >
           <ExternalLink className="w-3.5 h-3.5" />
           <span>Live Demo</span>
@@ -147,7 +172,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           href={project.githubUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold text-slate-300 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-blue-400/40 hover:text-white transition-all duration-200"
+          className="flex-1 inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl text-xs font-semibold text-slate-300 bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-white/25 hover:text-white transition-all duration-200 active:scale-95"
         >
           <GithubIcon className="w-3.5 h-3.5" />
           <span>Source Code</span>
@@ -170,8 +195,14 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Lighting */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-blue-600/8 rounded-full blur-[160px] pointer-events-none -z-10" />
-      <div className="absolute bottom-20 right-10 w-[400px] h-[400px] bg-indigo-600/8 rounded-full blur-[140px] pointer-events-none -z-10" />
+      <div
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full blur-[160px] pointer-events-none -z-10 opacity-15"
+        style={{ backgroundColor: "var(--theme-primary)" }}
+      />
+      <div
+        className="absolute bottom-20 right-10 w-[400px] h-[400px] rounded-full blur-[140px] pointer-events-none -z-10 opacity-10"
+        style={{ backgroundColor: "var(--theme-accent)" }}
+      />
 
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -180,9 +211,9 @@ export default function ProjectsSection() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-blue-400/25 text-xs font-bold text-blue-300 mb-3 shadow-[0_0_15px_rgba(59,130,246,0.12)]"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-white/15 text-xs font-bold text-white mb-3 shadow-md"
           >
-            <Zap className="w-3.5 h-3.5 text-blue-400 fill-blue-400" />
+            <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
             <span>Featured Production Portfolio</span>
           </motion.div>
           <motion.h2
@@ -193,7 +224,7 @@ export default function ProjectsSection() {
             className="text-3xl sm:text-4xl font-black text-white tracking-tight"
           >
             Engineered For Scale &{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-sky-200 to-indigo-300">
+            <span className="theme-gradient-text">
               Real-Time Impact
             </span>
           </motion.h2>
@@ -217,7 +248,7 @@ export default function ProjectsSection() {
               className={cn(
                 "relative px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer select-none",
                 selectedCategory === cat
-                  ? "text-white bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 shadow-[0_0_15px_rgba(59,130,246,0.3)] border border-blue-400/35"
+                  ? "text-white theme-btn border border-white/30"
                   : "text-slate-400 hover:text-slate-200 bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06]"
               )}
             >

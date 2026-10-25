@@ -19,10 +19,19 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative border-t border-blue-500/20 bg-[#070b14] pt-16 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Background Subtle Sapphire Top Glow Line */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-[1.5px] bg-gradient-to-r from-transparent via-blue-500/60 to-transparent shadow-[0_0_15px_rgba(59,130,246,0.3)]" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-32 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
+    <footer className="relative border-t border-white/10 bg-[#070b14] pt-16 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      {/* Background Subtle Dynamic Top Glow Line */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-4/5 h-[1.5px] opacity-75 shadow-md"
+        style={{
+          background: "linear-gradient(to right, transparent, var(--theme-primary), transparent)",
+          boxShadow: "0 0 15px var(--theme-glow)",
+        }}
+      />
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-96 h-32 rounded-full blur-3xl pointer-events-none opacity-10"
+        style={{ backgroundColor: "var(--theme-primary)" }}
+      />
 
       <div className="max-w-6xl mx-auto flex flex-col items-center">
         {/* Brand & Quick Navigation */}
@@ -37,24 +46,24 @@ export default function Footer() {
 
           {/* Quick Page Links */}
           <div className="flex flex-wrap justify-center gap-6 text-xs sm:text-sm font-semibold text-slate-400">
-            <a href="#hero" className="hover:text-sky-300 transition-colors">
+            <a href="#hero" className="hover:text-white transition-colors">
               Home
             </a>
-            <a href="#about" className="hover:text-sky-300 transition-colors">
+            <a href="#about" className="hover:text-white transition-colors">
               About
             </a>
-            <a href="#projects" className="hover:text-sky-300 transition-colors">
+            <a href="#projects" className="hover:text-white transition-colors">
               Projects
             </a>
             <a
               href={PERSONAL_INFO.resumePdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-400 hover:text-sky-300 transition-colors inline-flex items-center gap-1 cursor-pointer"
+              className="text-[var(--theme-primary)] hover:text-white transition-colors inline-flex items-center gap-1 cursor-pointer"
             >
               Resume (PDF)
             </a>
-            <a href="#contact" className="hover:text-sky-300 transition-colors">
+            <a href="#contact" className="hover:text-white transition-colors">
               Contact
             </a>
           </div>
@@ -70,7 +79,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.name}
-                  className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-slate-400 hover:text-white hover:border-blue-400/60 hover:bg-blue-500/10 hover:shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all duration-200"
+                  className="p-2.5 rounded-xl bg-white/[0.03] border border-white/10 text-slate-400 hover:text-white hover:border-white/30 hover:bg-white/[0.08] transition-all duration-200"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -83,17 +92,17 @@ export default function Footer() {
         <div className="w-full pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
           <p className="flex items-center gap-1.5 text-center sm:text-left">
             <span>© {new Date().getFullYear()} {PERSONAL_INFO.name}. Built with</span>
-            <span className="text-sky-400 font-semibold">Next.js 16</span>,
-            <span className="text-blue-400 font-semibold">Tailwind CSS</span> &
-            <span className="text-indigo-400 font-semibold">Framer Motion</span>.
+            <span className="text-white font-semibold">Next.js 16</span>,
+            <span className="text-white font-semibold">Tailwind CSS</span> &
+            <span className="text-white font-semibold">Framer Motion</span>.
           </p>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass border border-blue-400/30 text-slate-300 hover:text-sky-300 hover:border-blue-400 hover:shadow-[0_0_12px_rgba(59,130,246,0.3)] transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass border border-white/15 text-slate-300 hover:text-white hover:border-white/30 transition-all cursor-pointer"
           >
             <span>Back to top</span>
-            <ArrowUp className="w-3.5 h-3.5 text-blue-400" />
+            <ArrowUp className="w-3.5 h-3.5 text-[var(--theme-primary)]" />
           </button>
         </div>
       </div>

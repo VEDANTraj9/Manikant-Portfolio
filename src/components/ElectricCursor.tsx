@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function ElectricCursor() {
+  const { currentTheme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
   const [isPointer, setIsPointer] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
@@ -76,11 +78,17 @@ export default function ElectricCursor() {
         <div
           className={`rounded-full transition-all duration-150 ${
             isClicking
-              ? "w-8 h-8 bg-white shadow-[0_0_18px_#38bdf8,0_0_30px_#6366f1]"
+              ? "w-7 h-7 bg-white"
               : isPointer
-              ? "w-5 h-5 bg-sky-300 shadow-[0_0_12px_#38bdf8]"
-              : "w-2.5 h-2.5 bg-blue-400 shadow-[0_0_10px_#3b82f6]"
+              ? "w-4.5 h-4.5"
+              : "w-2.5 h-2.5"
           }`}
+          style={{
+            backgroundColor: isClicking ? "#ffffff" : isPointer ? currentTheme.secondaryHex : currentTheme.primaryHex,
+            boxShadow: isClicking
+              ? `0 0 20px ${currentTheme.secondaryHex}, 0 0 35px ${currentTheme.accentHex}`
+              : `0 0 12px ${currentTheme.primaryHex}`,
+          }}
         />
       </motion.div>
 
@@ -95,14 +103,24 @@ export default function ElectricCursor() {
         }}
       >
         <div
-          className={`rounded-full border border-blue-400/25 transition-all duration-300 flex items-center justify-center ${
-            isPointer
-              ? "w-14 h-14 bg-blue-500/10 border-blue-400/50 shadow-[0_0_20px_rgba(59,130,246,0.3)] scale-110"
-              : "w-9 h-9 bg-indigo-500/5 shadow-[0_0_12px_rgba(99,102,241,0.15)]"
+          className={`rounded-full transition-all duration-300 flex items-center justify-center ${
+            isPointer ? "w-14 h-14 scale-110" : "w-9 h-9"
           }`}
+          style={{
+            border: `1px solid ${currentTheme.primaryHex}44`,
+            boxShadow: isPointer
+              ? `0 0 22px ${currentTheme.glowRgba}`
+              : `0 0 10px ${currentTheme.glowRgba}`,
+            backgroundColor: `${currentTheme.primaryHex}10`,
+          }}
         >
           {/* Subtle Electric Plasma Ring Glow */}
-          <div className="w-full h-full rounded-full bg-gradient-to-tr from-blue-400/15 via-transparent to-indigo-500/15 animate-spin-slow" />
+          <div
+            className="w-full h-full rounded-full animate-spin-slow opacity-60"
+            style={{
+              background: `radial-gradient(circle, ${currentTheme.secondaryHex}22 0%, transparent 70%)`,
+            }}
+          />
         </div>
       </motion.div>
     </>

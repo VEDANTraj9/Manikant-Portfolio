@@ -20,6 +20,7 @@ import {
   Zap,
 } from "lucide-react";
 import { PERSONAL_INFO } from "@/data/portfolioData";
+import Tilt3DCard from "@/components/Tilt3DCard";
 
 interface ContactFormData {
   name: string;
@@ -76,7 +77,7 @@ export default function ContactSection() {
         throw new Error("Please enter a valid email address.");
       }
 
-      // Simulated high-voltage ignition surge
+      // Simulated ignition surge
       await new Promise((resolve) => setTimeout(resolve, 600));
 
       const formattedMessage = [
@@ -111,8 +112,14 @@ export default function ContactSection() {
   return (
     <section id="contact" className="relative py-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
       {/* Background Lighting */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-cyan-600/10 rounded-full blur-[170px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-10 w-[350px] h-[350px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none -z-10" />
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] rounded-full blur-[170px] pointer-events-none -z-10 opacity-15"
+        style={{ backgroundColor: "var(--theme-primary)" }}
+      />
+      <div
+        className="absolute bottom-10 left-10 w-[350px] h-[350px] rounded-full blur-[120px] pointer-events-none -z-10 opacity-15"
+        style={{ backgroundColor: "var(--theme-accent)" }}
+      />
 
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
@@ -121,9 +128,9 @@ export default function ContactSection() {
             initial={{ opacity: 0, y: 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-cyan-400/30 text-xs font-bold text-cyan-300 mb-3 shadow-[0_0_15px_rgba(0,240,255,0.15)]"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-white/15 text-xs font-bold text-white mb-3 shadow-md"
           >
-            <Zap className="w-3.5 h-3.5 text-cyan-400 fill-cyan-400" />
+            <Zap className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
             <span>Direct Electric Channel</span>
           </motion.div>
           <motion.h2
@@ -134,7 +141,7 @@ export default function ContactSection() {
             className="text-3xl sm:text-4xl font-black text-white tracking-tight"
           >
             Let&apos;s Build Something{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-300 to-purple-400">
+            <span className="theme-gradient-text">
               High-Voltage
             </span>
           </motion.h2>
@@ -150,15 +157,18 @@ export default function ContactSection() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* Left Column: Direct High-Voltage Contact Cards */}
+          {/* Left Column: Direct High-Voltage Contact Cards with 3D Tilt */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-5 space-y-4"
           >
-            {/* WhatsApp Quick Connect Card with Flowing Electric Border */}
-            <div className="glass-card border-beam-card rounded-2xl p-6 border border-emerald-500/40 relative overflow-hidden group">
+            {/* WhatsApp Quick Connect Card */}
+            <Tilt3DCard
+              maxTilt={10}
+              className="glass-card border-beam-card rounded-2xl p-6 border border-white/15 relative overflow-hidden group"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3.5">
                   <div className="p-3 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
@@ -199,13 +209,16 @@ export default function ContactSection() {
                   <span>{copiedField === "whatsapp" ? "Copied!" : "Copy"}</span>
                 </button>
               </div>
-            </div>
+            </Tilt3DCard>
 
             {/* Email Contact Card */}
-            <div className="glass-card border-beam-card rounded-2xl p-6 border border-cyan-400/30 group">
+            <Tilt3DCard
+              maxTilt={10}
+              className="glass-card border-beam-card rounded-2xl p-6 border border-white/15 group"
+            >
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3.5">
-                  <div className="p-3 rounded-xl bg-cyan-500/15 border border-cyan-500/30 text-cyan-400 shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+                  <div className="p-3 rounded-xl bg-white/[0.05] border border-white/15 text-[var(--theme-primary)] shadow-md">
                     <Mail className="w-6 h-6" />
                   </div>
                   <div>
@@ -219,33 +232,36 @@ export default function ContactSection() {
                   title="Copy Email"
                 >
                   {copiedField === "email" ? (
-                    <Check className="w-4 h-4 text-cyan-400" />
+                    <Check className="w-4 h-4 text-emerald-400" />
                   ) : (
                     <Copy className="w-4 h-4" />
                   )}
                 </button>
               </div>
               <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between text-xs">
-                <span className="font-mono text-slate-200">{PERSONAL_INFO.email}</span>
+                <span className="font-mono text-slate-200 truncate max-w-[200px]">{PERSONAL_INFO.email}</span>
                 <a
                   href={`mailto:${PERSONAL_INFO.email}`}
-                  className="text-cyan-400 hover:text-cyan-300 flex items-center gap-1 font-semibold"
+                  className="text-[var(--theme-primary)] hover:text-white flex items-center gap-1 font-semibold"
                 >
                   Compose <ExternalLink className="w-3 h-3" />
                 </a>
               </div>
-            </div>
+            </Tilt3DCard>
 
             {/* Resume Download Card */}
-            <div className="glass-card rounded-2xl p-6 border border-purple-500/40 relative bg-purple-950/20 shadow-[0_0_20px_rgba(139,92,246,0.15)]">
+            <Tilt3DCard
+              maxTilt={10}
+              className="glass-card rounded-2xl p-6 border border-white/15 relative bg-black/40 shadow-md"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="p-3 rounded-xl bg-purple-500/20 border border-purple-400/30 text-purple-300">
+                  <div className="p-3 rounded-xl bg-white/[0.05] border border-white/15 text-[var(--theme-secondary)]">
                     <FileText className="w-6 h-6" />
                   </div>
                   <div>
                     <h3 className="text-base font-bold text-white">Official Resume (PDF)</h3>
-                    <p className="text-xs text-slate-400">Updated: September 2026</p>
+                    <p className="text-xs text-slate-400">Updated: 2026 Edition</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -253,31 +269,31 @@ export default function ContactSection() {
                     href={PERSONAL_INFO.resumePdfUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/5 border border-white/10 hover:border-blue-400/40 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-semibold text-slate-300 hover:text-white bg-white/5 border border-white/10 hover:border-white/25 transition-all cursor-pointer"
                   >
-                    <Eye className="w-3.5 h-3.5 text-sky-400" />
+                    <Eye className="w-3.5 h-3.5 text-slate-300" />
                     <span>View</span>
                   </a>
                   <a
                     href={PERSONAL_INFO.resumeDownloadUrl}
                     download="Manikant_Kumar.pdf"
-                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 transition-all shadow-md shadow-blue-600/25 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-white theme-btn transition-all shadow-md cursor-pointer active:scale-95"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download</span>
                   </a>
                 </div>
               </div>
-            </div>
+            </Tilt3DCard>
 
             {/* Location & Timezone Info */}
             <div className="glass-card rounded-2xl p-6 border border-white/10 space-y-3">
               <div className="flex items-center gap-3 text-xs text-slate-300">
-                <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
+                <MapPin className="w-4 h-4 text-[var(--theme-primary)] shrink-0" />
                 <span>{PERSONAL_INFO.location}</span>
               </div>
               <div className="flex items-center gap-3 text-xs text-slate-300">
-                <Clock className="w-4 h-4 text-purple-400 shrink-0" />
+                <Clock className="w-4 h-4 text-[var(--theme-secondary)] shrink-0" />
                 <span>Available for Indian Standard Time (IST) & Global Remote</span>
               </div>
               <div className="flex items-center gap-3 text-xs text-slate-300">
@@ -287,53 +303,49 @@ export default function ContactSection() {
             </div>
           </motion.div>
 
-          {/* Right Column: High-Voltage Contact Form */}
+          {/* Right Column: High-Voltage Contact Form with 3D Depth */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             className="lg:col-span-7"
           >
-            <div className="glass-card border-beam-card rounded-3xl p-6 sm:p-8 border border-cyan-400/25 relative shadow-[0_10px_40px_rgba(0,0,0,0.6)]">
+            <Tilt3DCard
+              maxTilt={6}
+              scaleOnHover={1.01}
+              className="glass-card border-beam-card rounded-3xl p-6 sm:p-8 border border-white/15 relative shadow-[0_10px_40px_rgba(0,0,0,0.6)]"
+            >
               <div className="flex items-center gap-2 mb-2">
-                <Zap className="w-5 h-5 text-cyan-400 fill-cyan-400" />
-                <h3 className="text-xl font-bold text-white">Send Direct High-Voltage Message</h3>
+                <Zap className="w-5 h-5 text-amber-300 fill-amber-300" />
+                <h3 className="text-xl font-bold text-white">Send Direct Message</h3>
               </div>
               <p className="text-xs sm:text-sm text-slate-400 mb-6">
-                Fill out the form below. Upon submission, it formats and triggers your message directly to WhatsApp.
+                Fill the fields below to initiate instant end-to-end communication via WhatsApp dispatch.
               </p>
 
-              {/* Status Notifications */}
+              {/* Status Alerts */}
               <AnimatePresence>
                 {success && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="mb-6 p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-300 text-xs sm:text-sm flex items-start gap-3 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mb-6 p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/40 text-emerald-200 text-xs sm:text-sm flex items-center gap-2.5 shadow-[0_0_15px_rgba(16,185,129,0.2)]"
                   >
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-bold text-emerald-200">⚡ Message Dispatched to WhatsApp!</p>
-                      <p className="mt-0.5 text-xs text-emerald-300/90">
-                        A WhatsApp chat tab has opened with your formatted message. You can also reach out directly via call/WhatsApp at {PERSONAL_INFO.phone}.
-                      </p>
-                    </div>
+                    <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
+                    <span>WhatsApp message formatted and opened in your browser window!</span>
                   </motion.div>
                 )}
 
                 {error && (
                   <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="mb-6 p-4 rounded-xl bg-red-500/15 border border-red-500/40 text-red-300 text-xs sm:text-sm flex items-start gap-3"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="mb-6 p-4 rounded-xl bg-red-500/15 border border-red-500/40 text-red-200 text-xs sm:text-sm flex items-center gap-2.5"
                   >
-                    <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-bold text-red-200">Submission Error</p>
-                      <p className="mt-0.5 text-xs text-red-300/90">{error}</p>
-                    </div>
+                    <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
+                    <span>{error}</span>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -343,7 +355,7 @@ export default function ContactSection() {
                   {/* Name Input */}
                   <div>
                     <label htmlFor="name" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                      Your Full Name <span className="text-cyan-400">*</span>
+                      Your Name / Company <span className="text-red-400">*</span>
                     </label>
                     <input
                       id="name"
@@ -360,7 +372,7 @@ export default function ContactSection() {
                   {/* Email Input */}
                   <div>
                     <label htmlFor="email" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                      Your Email Address <span className="text-cyan-400">*</span>
+                      Your Email Address <span className="text-red-400">*</span>
                     </label>
                     <input
                       id="email"
@@ -416,7 +428,7 @@ export default function ContactSection() {
                 {/* Message Input */}
                 <div>
                   <label htmlFor="message" className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Your Message <span className="text-cyan-400">*</span>
+                    Your Message <span className="text-red-400">*</span>
                   </label>
                   <textarea
                     id="message"
@@ -430,31 +442,26 @@ export default function ContactSection() {
                   />
                 </div>
 
-                {/* High-Voltage Submit Button */}
+                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-bold text-sm text-white electric-btn disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99]"
+                  className="w-full flex items-center justify-center gap-2.5 py-3.5 px-6 rounded-xl font-bold text-sm text-white theme-btn disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer active:scale-[0.99] transition-all"
                 >
                   {loading ? (
                     <>
                       <Loader2 className="w-4 h-4 animate-spin text-white" />
-                      <span>Igniting WhatsApp Transmission...</span>
+                      <span>Opening WhatsApp Transmission...</span>
                     </>
                   ) : (
                     <>
-                      <Send className="w-4 h-4 text-cyan-200" />
+                      <Send className="w-4 h-4 text-white" />
                       <span>Send Message via WhatsApp (Instant)</span>
                     </>
                   )}
                 </button>
-
-                <p className="text-[11px] text-center text-slate-400 flex items-center justify-center gap-1">
-                  <Zap className="w-3 h-3 text-cyan-400 fill-cyan-400" />
-                  <span>Instant trigger opens WhatsApp prefilled with your message details.</span>
-                </p>
               </form>
-            </div>
+            </Tilt3DCard>
           </motion.div>
         </div>
       </div>
